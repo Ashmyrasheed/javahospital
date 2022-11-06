@@ -172,7 +172,23 @@ public class Hospital {
                     }
                     break;
                 case 7:
+                    System.out.println("Name of doctor who consult fever");
+                    try {
+                        Class.forName("com.mysql.jdbc.Driver");
+                        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/hospitaldb", "root", "");
+                        String sql = "SELECT COUNT(*) AS number,`doctorname` FROM `patients` WHERE `symptoms`='fever' GROUP BY `doctorname`";
+                        Statement stmt = con.createStatement();
+                        ResultSet rs = stmt.executeQuery(sql);
+                        while (rs.next()) {
+                            String getCount = rs.getString("number");
+                            String getDoc = rs.getString("doctorname");
+                            System.out.println("Number of patients consult to this doctor for fever +" + getCount);
+                            System.out.println("Name of doctor =" + getDoc + '\n');
 
+                        }
+                    } catch (Exception e) {
+                        System.out.println(e);
+                    }
                     break;
                 case 8:
                     System.exit(0);
