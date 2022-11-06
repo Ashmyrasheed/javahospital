@@ -20,7 +20,38 @@ public class Hospital {
 
             switch (choice) {
                 case 1:
-                    System.out.println("insert the data ");
+                    System.out.println("Insert the data ");
+                    System.out.println("Enter the patient Id");
+                    int id = hos.nextInt();
+                    System.out.println("Enter the patient name");
+                    String name = hos.next();
+                    System.out.println("Address");
+                    String add = hos.next();
+                    System.out.println("pincode");
+                    int pin = hos.nextInt();
+                    System.out.println("Phone Number");
+                    String phone = hos.next();
+                    System.out.println("Symptoms");
+                    String symp = hos.next();
+                    System.out.println("Doctor name");
+                    String docName = hos.next();
+
+                    try {
+                        Class.forName("com.mysql.jdbc.Driver");
+                        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/hospitaldb", "root", "");
+                        String sql = "INSERT INTO `patients`(`patientid`, `name`, `address`, `pincode`, `phno`, `symptoms`, `doctorname`) VALUES (?,?,?,?,?,?,?)";
+                        PreparedStatement stmt = con.prepareStatement(sql);
+                        stmt.setInt(1, id);
+                        stmt.setString(2, name);
+                        stmt.setString(3, add);
+                        stmt.setInt(4, pin);
+                        stmt.setString(5, phone);
+                        stmt.setString(6, symp);
+                        stmt.setString(7, docName);
+                        stmt.executeUpdate();
+                    } catch (Exception e) {
+                        System.out.println(e);
+                    }
                     break;
                 case 2:
                     System.out.println("View the data ");
