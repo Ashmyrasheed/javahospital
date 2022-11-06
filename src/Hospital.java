@@ -83,7 +83,33 @@ public class Hospital {
                     break;
                 case 3:
                     System.out.println("Search the data ");
-                   break;
+                    id = hos.nextInt();
+                    try {
+                        Class.forName("com.mysql.jdbc.Driver");
+                        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/hospitaldb", "root", "");
+                        String sql = "SELECT `patientid`, `name`, `address`, `pincode`, `phno`, `symptoms`, `doctorname` FROM `patients` WHERE `patientid`=" + String.valueOf(id);
+                        Statement stmt = con.createStatement();
+                        ResultSet rs = stmt.executeQuery(sql);
+                        while (rs.next()) {
+                            String getId = rs.getString("patientid");
+                            String getName = rs.getString("name");
+                            String getAddr = rs.getString("address");
+                            String getPin = rs.getString("pincode");
+                            String getPhone = rs.getString("phno");
+                            String getSymp = rs.getString("symptoms");
+                            String getDoc = rs.getString("doctorname");
+                            System.out.println("Patient id=" + getId);
+                            System.out.println("Patient name=" + getName);
+                            System.out.println("Patient Address=" + getAddr);
+                            System.out.println("Patient pincode=" + getPin);
+                            System.out.println("Patient phone=" + getPhone);
+                            System.out.println("Patient Symptoms=" + getSymp);
+                            System.out.println("Patient Doctor name=" + getDoc + '\n');
+                        }
+                    } catch (Exception e) {
+                        System.out.println(e);
+                    }
+                    break;
                 case 4:
                     System.out.println("Update the data ");
 
