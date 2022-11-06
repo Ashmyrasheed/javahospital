@@ -139,11 +139,37 @@ public class Hospital {
                     break;
                 case 5:
                     System.out.println("Delete the data");
-
+                    System.out.println("Enter the patient Id");
+                    id = hos.nextInt();
+                    try {
+                        Class.forName("com.mysql.jdbc.Driver");
+                        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/hospitaldb", "root", "");
+                        String sql = "DELETE FROM `patients` WHERE `patientid`=" + id;
+                        Statement stmt = con.createStatement();
+                        stmt.executeUpdate(sql);
+                        System.out.println("Deleted successfully");
+                    } catch (Exception e) {
+                        System.out.println(e);
+                    }
                     break;
                 case 6:
                     System.out.println("Number of doctors");
+                    try {
+                        Class.forName("com.mysql.jdbc.Driver");
+                        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/hospitaldb", "root", "");
+                        String sql = "SELECT COUNT(*) AS number,`doctorName` FROM `patients` GROUP BY `doctorname`";
+                        Statement stmt = con.createStatement();
+                        ResultSet rs = stmt.executeQuery(sql);
+                        while (rs.next()) {
+                            String getCount = rs.getString("number");
+                            String getDoc = rs.getString("doctorname");
+                            System.out.println("Number of patients consult to this doctor is +" + getCount);
+                            System.out.println("Name of doctor =" + getDoc + '\n');
 
+                        }
+                    } catch (Exception e) {
+                        System.out.println(e);
+                    }
                     break;
                 case 7:
 
