@@ -20,29 +20,175 @@ public class Hospital {
 
             switch (choice) {
                 case 1:
-                    System.out.println("insert the data ");
+                    System.out.println("Insert the data ");
+                    System.out.println("Enter the patient Id");
+                    int id = hos.nextInt();
+                    System.out.println("Enter the patient name");
+                    String name = hos.next();
+                    System.out.println("Address");
+                    String add = hos.next();
+                    System.out.println("pincode");
+                    int pin = hos.nextInt();
+                    System.out.println("Phone Number");
+                    String phone = hos.next();
+                    System.out.println("Symptoms");
+                    String symp = hos.next();
+                    System.out.println("Doctor name");
+                    String docName = hos.next();
+
+                    try {
+                        Class.forName("com.mysql.jdbc.Driver");
+                        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/hospitaldb", "root", "");
+                        String sql = "INSERT INTO `patients`(`patientid`, `name`, `address`, `pincode`, `phno`, `symptoms`, `doctorname`) VALUES (?,?,?,?,?,?,?)";
+                        PreparedStatement stmt = con.prepareStatement(sql);
+                        stmt.setInt(1, id);
+                        stmt.setString(2, name);
+                        stmt.setString(3, add);
+                        stmt.setInt(4, pin);
+                        stmt.setString(5, phone);
+                        stmt.setString(6, symp);
+                        stmt.setString(7, docName);
+                        stmt.executeUpdate();
+                    } catch (Exception e) {
+                        System.out.println(e);
+                    }
                     break;
                 case 2:
                     System.out.println("View the data ");
-
+                    try {
+                        Class.forName("com.mysql.jdbc.Driver");
+                        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/hospitaldb", "root", "");
+                        String sql = "SELECT `patientid`, `name`, `address`, `pincode`, `phno`, `symptoms`, `doctorname` FROM `patients` ";
+                        Statement stmt = con.createStatement();
+                        ResultSet rs = stmt.executeQuery(sql);
+                        while (rs.next()) {
+                            String getId = rs.getString("patientid");
+                            String getName = rs.getString("name");
+                            String getAddr = rs.getString("address");
+                            String getPin = rs.getString("pincode");
+                            String getPhone = rs.getString("phno");
+                            String getSymp = rs.getString("symptoms");
+                            String getDoc = rs.getString("doctorname");
+                            System.out.println("Patient id=" + getId);
+                            System.out.println("Patient name=" + getName);
+                            System.out.println("Patient Address=" + getAddr);
+                            System.out.println("Patient pincode=" + getPin);
+                            System.out.println("Patient phone=" + getPhone);
+                            System.out.println("Patient Symptoms=" + getSymp);
+                            System.out.println("Patient Doctor name=" + getDoc + '\n');
+                        }
+                    } catch (Exception e) {
+                        System.out.println(e);
+                    }
                     break;
                 case 3:
                     System.out.println("Search the data ");
-                   break;
+                    id = hos.nextInt();
+                    try {
+                        Class.forName("com.mysql.jdbc.Driver");
+                        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/hospitaldb", "root", "");
+                        String sql = "SELECT `patientid`, `name`, `address`, `pincode`, `phno`, `symptoms`, `doctorname` FROM `patients` WHERE `patientid`=" + String.valueOf(id);
+                        Statement stmt = con.createStatement();
+                        ResultSet rs = stmt.executeQuery(sql);
+                        while (rs.next()) {
+                            String getId = rs.getString("patientid");
+                            String getName = rs.getString("name");
+                            String getAddr = rs.getString("address");
+                            String getPin = rs.getString("pincode");
+                            String getPhone = rs.getString("phno");
+                            String getSymp = rs.getString("symptoms");
+                            String getDoc = rs.getString("doctorname");
+                            System.out.println("Patient id=" + getId);
+                            System.out.println("Patient name=" + getName);
+                            System.out.println("Patient Address=" + getAddr);
+                            System.out.println("Patient pincode=" + getPin);
+                            System.out.println("Patient phone=" + getPhone);
+                            System.out.println("Patient Symptoms=" + getSymp);
+                            System.out.println("Patient Doctor name=" + getDoc + '\n');
+                        }
+                    } catch (Exception e) {
+                        System.out.println(e);
+                    }
+                    break;
                 case 4:
                     System.out.println("Update the data ");
-
+                    System.out.println("Enter the patient Id");
+                    id = hos.nextInt();
+                    System.out.println("Enter the patient name");
+                    name = hos.next();
+                    System.out.println("Address");
+                    add = hos.next();
+                    System.out.println("pincode");
+                    pin = hos.nextInt();
+                    System.out.println("Phone Number");
+                    phone = hos.next();
+                    System.out.println("Symptoms");
+                    symp = hos.next();
+                    System.out.println("Doctor name");
+                    docName = hos.next();
+                    try {
+                        Class.forName("com.mysql.jdbc.Driver");
+                        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/hospitaldb", "root", "");
+                        String sql = "UPDATE `patients` SET `patientid`='" + id + "',`name`='" + name + "',`address`='" + add + "',`pincode`='" + pin + "',`phno`='" + phone + "',`symptoms`='" + symp + "',`doctorname`='" + docName + "' WHERE `patientid`=" + id;
+                        Statement stmt = con.createStatement();
+                        stmt.executeUpdate(sql);
+                        System.out.println("Updated successfully");
+                    } catch (Exception e) {
+                        System.out.println(e);
+                    }
                     break;
                 case 5:
                     System.out.println("Delete the data");
-
+                    System.out.println("Enter the patient Id");
+                    id = hos.nextInt();
+                    try {
+                        Class.forName("com.mysql.jdbc.Driver");
+                        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/hospitaldb", "root", "");
+                        String sql = "DELETE FROM `patients` WHERE `patientid`=" + id;
+                        Statement stmt = con.createStatement();
+                        stmt.executeUpdate(sql);
+                        System.out.println("Deleted successfully");
+                    } catch (Exception e) {
+                        System.out.println(e);
+                    }
                     break;
                 case 6:
                     System.out.println("Number of doctors");
+                    try {
+                        Class.forName("com.mysql.jdbc.Driver");
+                        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/hospitaldb", "root", "");
+                        String sql = "SELECT COUNT(*) AS number,`doctorName` FROM `patients` GROUP BY `doctorname`";
+                        Statement stmt = con.createStatement();
+                        ResultSet rs = stmt.executeQuery(sql);
+                        while (rs.next()) {
+                            String getCount = rs.getString("number");
+                            String getDoc = rs.getString("doctorname");
+                            System.out.println("Number of patients consult to this doctor is +" + getCount);
+                            System.out.println("Name of doctor =" + getDoc + '\n');
 
+                        }
+                    } catch (Exception e) {
+                        System.out.println(e);
+                    }
                     break;
                 case 7:
+                    System.out.println("Name of doctor who consult fever");
+                    try {
+                        Class.forName("com.mysql.jdbc.Driver");
+                        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/hospitaldb", "root", "");
+                        String sql = "SELECT COUNT(*) AS number,`doctorname` FROM `patients` WHERE `symptoms`='fever' GROUP BY `doctorname`";
+                        Statement stmt = con.createStatement();
+                        ResultSet rs = stmt.executeQuery(sql);
+                        while (rs.next()) {
+                            String getCount = rs.getString("number");
+                            String getDoc = rs.getString("doctorname");
+                            System.out.println("Number of patients consult to this doctor for fever +" + getCount);
+                            System.out.println("Name of doctor =" + getDoc + '\n');
 
+                        }
+                    } catch (Exception e) {
+                        System.out.println(e);
+                    }
                     break;
                 case 8:
                     System.exit(0);
